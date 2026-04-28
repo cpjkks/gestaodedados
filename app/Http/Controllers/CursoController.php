@@ -2,99 +2,106 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Disciplina;
+use App\Models\Curso; // Correção: Importando o Model certo
 use Illuminate\Http\Request;
-use Inertia\Inertia; // A ponte mágica entre o Laravel e o Vue.js
+use Inertia\Inertia;
 
 class CursoController extends Controller
 {
     /**
      * READ: Lista todos os registros.
-     * Geralmente a tela inicial do seu CRUD (uma tabela).
      */
     public function index()
     {
-        // Busca todas as disciplinas no banco. 
-        // O get() transforma a busca em uma Collection de objetos.
-        $disciplinas = Disciplina::all();
 
-        // Envia para o arquivo resources/js/Pages/Disciplinas/Index.vue
-        // O segundo parâmetro é um array com os dados (as "props" do Vue)
-        return Inertia::render('Disciplinas/Index', [
-            'disciplinas' => $disciplinas
-        ]);
+    dd('VITÓRIA! O Laravel achou o Controller!');
+/*         // Usa a CLASSE (Singular e Maiúscula) para buscar os dados
+        $cursos = Curso::all();
+
+        // Aponta para a pasta e arquivo corretos no Vue.js
+        return Inertia::render('Cursos/Index', [
+            'cursos' => $cursos
+        ]); */
     }
 
     /**
-     * CREATE: Apenas exibe o formulário vazio de cadastro.
+     * CREATE: Exibe o formulário vazio para cadastrar um novo curso.
      */
     public function create()
     {
-        // Não precisa buscar dados, apenas abre a tela do formulário
-        return Inertia::render('Curso/Criar');
+        // Pasta plural / Arquivo em inglês para manter o padrão
+        return Inertia::render('Cursos/Create');
     }
 
     /**
-     * STORE: Recebe os dados do formulário (POST) e salva no banco.
+     * STORE: Recebe os dados do formulário e salva no banco.
      */
     public function store(Request $request)
     {
-        // 1. Validação (Sempre valide o que vem do frontend!)
+        // 1. Validação
         $request->validate([
-            'nome' => 'required|string|max:255|unique:curso,nome',
+            // A regra unique vai checar a TABELA (plural e minúscula)
+            'nome' => 'required|string|max:255|unique:cursos,nome',
         ], [
             'nome.required' => 'O nome do curso é obrigatório.',
             'nome.unique' => 'Este curso já está cadastrado.'
         ]);
 
-        // 2. Salva no banco (O Model aqui usa aquele $fillable que configuramos)
+        // 2. Criação
         Curso::create([
             'nome' => $request->nome,
         ]);
 
-        // 3. Redireciona de volta para a lista (index) com uma mensagem de sucesso
-        return redirect()->route('curso.index')->with('success', 'Disciplina criada com sucesso!');
+        // 3. Redirecionamento (Rota no plural gerada pelo Route::resource)
+        return redirect()->route('cursos.index')->with('success', 'Curso criado com sucesso!');
     }
 
     /**
-     * EDIT: Busca um registro específico e abre o formulário preenchido.
+     * SHOW: Exibe os detalhes de UM registro específico (Opcional, mas faz parte do padrão).
+     */
+    public function show(Curso $curso)
+    {
+        return Inertia::render('Cursos/Show', [
+            'curso' => $curso
+        ]);
+    }
+
+    /**
+     * EDIT: Exibe o formulário preenchido para alterar um curso.
      */
     public function edit(Curso $curso)
     {
-        // O Laravel é inteligente (Route Model Binding): ele já busca a disciplina pelo ID na URL
-        // Ex: /disciplinas/5/edit -> Ele já traz a disciplina de ID 5 na variável $disciplina
-
-        return Inertia::render('Curso/Editar', [
-            'curso' => $curso // Manda o objeto pro Vue preencher os inputs
+        return Inertia::render('Cursos/Edit', [
+            'curso' => $curso
         ]);
     }
 
     /**
-     * UPDATE: Recebe os dados atualizados do formulário (PUT/PATCH) e altera no banco.
+     * UPDATE: Recebe os dados novos e atualiza no banco.
      */
     public function update(Request $request, Curso $curso)
     {
-        // 1. Validação (Ignorando o ID atual na regra de 'unique' para não dar erro)
+        // 1. Validação ignorando o ID atual
         $request->validate([
-            'nome' => 'required|string|max:255|unique:curso,nome,' . $curso->id,
+            'nome' => 'required|string|max:255|unique:cursos,nome,' . $curso->id,
         ]);
 
-        // 2. Atualiza os dados do objeto e salva
+        // 2. Atualização
         $curso->update([
             'nome' => $request->nome,
         ]);
 
-        return redirect()->route('curso.index')->with('success', 'Curso atualizado com sucesso!');
+        // 3. Redirecionamento
+        return redirect()->route('cursos.index')->with('success', 'Curso atualizado com sucesso!');
     }
 
     /**
-     * DELETE: Exclui o registro (ou aplica o SoftDelete).
+     * DESTROY: Exclui o registro (SoftDelete).
      */
     public function destroy(Curso $curso)
     {
-        // Como o Model tem SoftDeletes, isso apenas preenche a coluna 'deleted_at'
         $curso->delete();
 
-        return redirect()->route('curso.index')->with('success', 'Curso removido!');
+        return redirect()->route('cursos.index')->with('success', 'Curso removido!');
     }
 }
