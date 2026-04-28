@@ -15,7 +15,7 @@ class AnoDeEscolaridade extends Model
      * Define o nome da tabela (opcional se seguir o padrão plural do Laravel,
      * mas boa prática para evitar ambiguidades em sistemas legados).
      */
-    protected $table = 'ano_de_escolaridade';
+    protected $table = 'anos_de_escolaridade';
 
     /**
      * Mass Assignment: Define quais campos podem ser preenchidos via formulário.

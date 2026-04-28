@@ -1,22 +1,23 @@
 <script setup>
 import AppLayout from '@/layouts/AppLayout.vue';
+//import anos_de_escolaridade from '@/routes/anos_de_escolaridade';
 import { Head, Link } from '@inertiajs/vue3';
 
 // Recebe os dados que o Controller mandou (o array 'cursos')
 defineProps({
-    cursos: Array,
+    anos_de_escolaridade: Array,
 });
 
 // Função para confirmar a exclusão com segurança
 const confirmarExclusao = (event) => {
-    if (!confirm('Tem certeza que deseja excluir este curso?')) {
+    if (!confirm('Tem certeza que deseja excluir este Ano de Escolaridade?')) {
         event.preventDefault();
     }
 };
 </script>
 
 <template>
-    <Head title="Cursos" />
+    <Head title="Anos de Escolaridade" />
 
     <AppLayout>
         <div class="p-8">
@@ -27,12 +28,12 @@ const confirmarExclusao = (event) => {
             </div>
 
             <div class="flex justify-between items-center mb-8">
-                <h2 class="font-semibold text-2xl text-gray-800">Gestão de Cursos</h2>
+                <h2 class="font-semibold text-2xl text-gray-800">Gestão de nos de Escolaridade</h2>
                 <Link 
-                    href="/cursos/create" 
+                    href="/anos_de_escolaridade/create" 
                     class="bg-blue-600 text-white px-5 py-2 rounded-md shadow hover:bg-blue-700 transition font-medium"
                 >
-                    + Novo Curso
+                    + Novo Ano de Escolaridade
                 </Link>
             </div>
 
@@ -41,24 +42,24 @@ const confirmarExclusao = (event) => {
                     <thead class="bg-gray-50">
                         <tr class="border-b border-gray-200">
                             <th class="p-4 font-medium text-gray-600">ID</th>
-                            <th class="p-4 font-medium text-gray-600">Nome do Curso</th>
+                            <th class="p-4 font-medium text-gray-600">Nome do Ano de Escolaridade</th>
                             <th class="p-4 font-medium text-gray-600">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="curso in cursos" :key="curso.id" class="border-b border-gray-100 hover:bg-gray-50 transition">
-                            <td class="p-4 text-gray-800">{{ curso.id }}</td>
-                            <td class="p-4 text-gray-800 font-medium">{{ curso.nome }}</td>
+                        <tr v-for="ano in anos_de_escolaridade" :key="ano.id" class="border-b border-gray-100 hover:bg-gray-50 transition">
+                            <td class="p-4 text-gray-800">{{ ano.id }}</td>
+                            <td class="p-4 text-gray-800 font-medium">{{ ano.nome }}</td>
                             <td class="p-4 flex gap-4">
                                 <Link 
-                                    :href="'/cursos/' + curso.id + '/edit'" 
+                                    :href="'/anos_de_escolaridade/' + ano.id + '/edit'" 
                                     class="text-blue-600 hover:text-blue-800 font-medium underline-offset-4 hover:underline"
                                 >
                                     Editar
                                 </Link>
 
                                 <Link 
-                                    :href="'/cursos/' + curso.id" 
+                                    :href="'/anos_de_escolaridade/' + ano.id" 
                                     method="delete" 
                                     as="button"
                                     class="text-red-600 hover:text-red-800 font-medium underline-offset-4 hover:underline"
@@ -70,10 +71,10 @@ const confirmarExclusao = (event) => {
                             </td>
                         </tr>
                         
-                        <tr v-if="cursos.length === 0">
+                        <tr v-if="anos_de_escolaridade.length === 0">
                             <td colspan="3" class="p-12 text-center text-gray-500 italic">
-                                Nenhum curso cadastrado ainda no SISP. <br>
-                                <span class="text-sm">Clique em "+ Novo Curso" para começar o registro.</span>
+                                Nenhum Ano de Escolaridade cadastrado ou importado. <br>
+                                <span class="text-sm">Clique em "+ Ano de Escolaridade" para começar o registro.</span>
                             </td>
                         </tr>
                     </tbody>

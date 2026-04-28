@@ -13,15 +13,13 @@ class CursoController extends Controller
      */
     public function index()
     {
-
-    dd('VITÓRIA! O Laravel achou o Controller!');
-/*         // Usa a CLASSE (Singular e Maiúscula) para buscar os dados
+        // Usa a CLASSE (Singular e Maiúscula) para buscar os dados
         $cursos = Curso::all();
 
         // Aponta para a pasta e arquivo corretos no Vue.js
         return Inertia::render('Cursos/Index', [
             'cursos' => $cursos
-        ]); */
+        ]);
     }
 
     /**
