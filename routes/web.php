@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\AnoDeEscolaridadeController;
+use App\Http\Controllers\TipoDeTurnoController;
+use App\Http\Controllers\TurnoController;
 
 Route::inertia('/', 'Welcome', [
     'canRegister' => Features::enabled(Features::registration()),
@@ -23,7 +25,7 @@ Route::resource('turnos', TurnoController::class)
     ->middleware(['auth', 'verified']);      
 
 Route::resource('tipos_de_turno', TipoDeTurnoController::class)
-    ->middleware(['auth', 'verified']);    
+    ->middleware(['auth', 'verified']);       
 
 Route::get('/teste', function () {
     return 'O roteamento está vivo!';

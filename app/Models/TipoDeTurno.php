@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Curso extends Model
+class TipoDeTurno extends Model
 {
-    use HasFactory, SoftDeletes;
+    use SoftDeletes;
 
 
     protected $table = 'tipos_de_turno';

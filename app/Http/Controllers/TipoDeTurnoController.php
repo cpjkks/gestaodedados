@@ -4,12 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TipoDeTurno;
+use Inertia\Inertia;
 
-
-public function __construct()
-{
-    $this('auth');
-}
 
 class TipoDeTurnoController extends Controller
 {
@@ -20,8 +16,8 @@ class TipoDeTurnoController extends Controller
     {
         $tipos_de_turno = TipoDeTurno::paginate(10);
 
-        return Inertia::render('TiposDeTurno/Index', [
-            'TiposDeTurno' => $tipos_de_turno
+        return Inertia::render('TipoDeTurno/Index', [
+            'TipoDeTurno' => $tipos_de_turno
         ]);
     }
 
@@ -30,7 +26,7 @@ class TipoDeTurnoController extends Controller
      */
     public function create()
     {
-       return Inertia::render('TiposDeTurno/Create');
+       return Inertia::render('TipoDeTurno/Create');
     }
 
     /**
@@ -41,7 +37,7 @@ class TipoDeTurnoController extends Controller
            
         $request->validate([
             
-            'nome' => 'required|string|max:255|unique:tipodeturno,nome',
+            'nome' => 'required|string|max:255|unique:tipos_de_turno,nome',
 
         ], [
             'nome.required' => 'O nome do Tipo de Turno é obrigatório.',
@@ -49,7 +45,7 @@ class TipoDeTurnoController extends Controller
         ]);
 
         
-        TiposDeTurno::create([
+        TipoDeTurno::create([
             'nome' => $request->nome,
         ]);
 
@@ -60,34 +56,34 @@ class TipoDeTurnoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(TipoDeTurno $tipo_de_turno)
     {
-        return Inertia::render('TiposDeTurno/Show', [
-            'tipos_de_turno' => $tipos_de_turno
+        return Inertia::render('TipoDeTurno/Show', [
+            'tipo_de_turno' => $tipo_de_turno
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(TipoDeTurno $tipo_de_turno)
     {
-         return Inertia::render('TiposDeTurno/Edit', [
-            'tipos_de_turno' => $tipos_de_turno
+         return Inertia::render('TipoDeTurno/Edit', [
+            'tipo_de_turno' => $tipo_de_turno
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, TipoDeTurno $tipo_de_turno)
     {
         $request->validate([
-            'nome' => 'required|string|max:255|unique:tipodeturno,nome,' . $tipos_de_turno->id,
+            'nome' => 'required|string|max:255|unique:tipos_de_turno,nome,' . $tipo_de_turno->id,
         ]);
 
         // 2. Atualização
-        $tipos_de_turno->update([
+        $tipo_de_turno->update([
             'nome' => $request->nome,
         ]);
 
@@ -99,10 +95,10 @@ class TipoDeTurnoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TiposDeTurno $tipos_de_turno)
+    public function destroy(TipoDeTurno $tipo_de_turno)
     {
 
-        $tipos_de_turno->delete();
+        $tipo_de_turno->delete();
 
         return redirect()->route('tipos_de_turno.index')->with('success', 'Tipo de Turno removido!');
     }

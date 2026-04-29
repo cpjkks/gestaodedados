@@ -16,6 +16,6 @@ const confirmarExclusao = (event) => {
 </script>
 
 <template>
-    <Head title="Cursos" />
+    <Head title="Tipos De Turno" />
 
 </template>
