@@ -5,10 +5,17 @@ import AuthLayout from '@/layouts/AuthLayout.vue';
 import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 
+import PrimeVue from 'primevue/config';
+import Aura from '@primevue/themes/aura';
+import 'primeicons/primeicons.css';
+
+import { createApp, h } from 'vue';
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
+
     layout: (name) => {
         switch (true) {
             case name === 'Welcome':
@@ -21,13 +28,30 @@ createInertiaApp({
                 return AppLayout;
         }
     },
+
     progress: {
         color: '#4B5563',
     },
+
+    setup({ el, App, props, plugin }) {
+        const app = createApp({
+            render: () => h(App, props)
+        });
+
+        app.use(plugin);
+
+        app.use(PrimeVue, {
+            theme: {
+                preset: Aura
+            }
+        });
+
+        app.mount(el!);
+    }
 });
 
-// This will set light / dark mode on page load...
+// Theme
 initializeTheme();
 
-// This will listen for flash toast data from the server...
+// Flash messages
 initializeFlashToast();
