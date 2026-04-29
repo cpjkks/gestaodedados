@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('processos_pre_matricula', function (Blueprint $table) {
             $table->id(); 
+            $table->string('nome');
             $table->integer('status');
             $table->foreignId('periodo_letivo_academico_id')->constrained('periodos_letivos');
             $table->timestamps(); 

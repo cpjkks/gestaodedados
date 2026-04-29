@@ -36,4 +36,9 @@ class AnoDeEscolaridade extends Model
         return $this->belongsTo(Curso::class, 'curso_id');
     }
 
+    public function anosDeEscolaridade(): HasMany
+    {
+        return $this->hasMany(AnoDeEscolaridade::class, 'ano_de_escolaridade_id');
+    }
+
 }

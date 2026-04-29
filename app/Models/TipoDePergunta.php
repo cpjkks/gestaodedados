@@ -7,21 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class TipoDeTurno extends Model
+class TipoDePergunta extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-
-    protected $table = 'tipos_de_turno';
+    protected $table = 'tipos_de_pergunta';
 
     protected $fillable = [
         'nome',
     ];
 
-    public function turnos(): HasMany  
+    public function questoes(): HasMany
     {
-        return $this->hasMany(Turno::class, 'tipos_de_turno_id');
+        return $this->hasMany(Questao::class, 'tipo_de_pergunta_id');
     }
 
-
-}
+}            

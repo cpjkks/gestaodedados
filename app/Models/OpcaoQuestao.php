@@ -7,21 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class TipoDeTurno extends Model
+class OpcaoQuestao extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
-
-    protected $table = 'tipos_de_turno';
+    protected $table = 'opcoes_questoes';
 
     protected $fillable = [
         'nome',
+        'questao_id',
     ];
 
-    public function turnos(): HasMany  
+    public function questao(): BelongsTo
     {
-        return $this->hasMany(Turno::class, 'tipos_de_turno_id');
+        return $this->belongsTo(Questao::class, 'questao_id');
     }
-
-
 }

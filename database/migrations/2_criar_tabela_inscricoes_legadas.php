@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('inscricoes_legadas', function (Blueprint $table) {
             $table->id(); 
             $table->string('cep', 9);
+            $table->foreignId('ano_de_escolaridade_id')->constrained('anos_de_escolaridade');
             $table->geometry('coordenadas', subtype: 'point', srid: 4326);
             $table->index('coordenadas', 'idx_inscricoes_coordenadas_gist', 'gist');
             $table->foreignId('processo_id')->constrained('processos_pre_matricula');

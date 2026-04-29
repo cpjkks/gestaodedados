@@ -35,11 +35,7 @@ class Curso extends Model
         return $this->hasMany(AnoDeEscolaridade::class, 'curso_id');
     }
 
-    /**
-     * Um curso também possui muitas turmas acadêmicas.
-     * Isso permite fazer: $curso->turmas
-     */
-    public function turmas(): HasMany
+    public function turmasAcademicas(): HasMany
     {
         return $this->hasMany(TurmaAcademica::class, 'curso_id');
     }
